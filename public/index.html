@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Processing Service</title>
+</head>
+<body>
+    <h2>SQL Query Runner</h2>
+    <form id="queryForm">
+        <textarea id="sqlQuery" placeholder="Enter SQL query here"></textarea>
+        <button type="button" onclick="runQuery()">Run Query</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        function runQuery() {
+            const query = document.getElementById('sqlQuery').value;
+            fetch('/sql-run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({'query': query }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Clear previous results
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '';
+
+                // Create a table
+                const table = document.createElement('table');
+                table.setAttribute('border', '1');
+
+                // Generate table header
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                Object.keys(data.result[0]).forEach(headerText => {
+                    const headerCell = document.createElement('th');
+                    headerCell.textContent = headerText;
+                    headerRow.appendChild(headerCell);
+                });
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                // Generate table body
+                const tbody = document.createElement('tbody');
+                data.result.forEach(row => {
+                    const tr = document.createElement('tr');
+                    Object.values(row).forEach(text => {
+                        const td = document.createElement('td');
+                        td.textContent = text;
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+
+                // Append the table to the result div
+                resultDiv.appendChild(table);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
