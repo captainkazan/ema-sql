@@ -6,7 +6,10 @@
 <body>
     <h2>SQL Query Runner</h2>
     <form id="queryForm">
-        <textarea id="sqlQuery" placeholder="Enter SQL query here"></textarea>
+        <textarea id="sqlQuery" placeholder="Enter SQL query here" rows="8" cols="80">   SELECT users.name, users.email, tickets.subject
+            FROM ? AS tickets
+            JOIN ? AS users ON tickets.userId = users.id
+            WHERE tickets.status = 'open'</textarea>
         <button type="button" onclick="runQuery()">Run Query</button>
     </form>
     <div id="result"></div>
