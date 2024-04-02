@@ -35,3 +35,5 @@ Limitations and known issues
 4. queryExtract.js should help with extracting entities and filters but is commented out as it requires a different version of sql than alasql.
 
 What works? : Running alaSQl compliant sql against tickets and users json
+![home]([https://github.com/username/repository/blob/master/images/logo.png](https://github.com/captainkazan/ema-sql/blob/main/Screenshot%20(38).png))
+
